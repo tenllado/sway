@@ -85,6 +85,10 @@ client.urgent   	     $wur 		$wur 		$tur    $ind   	   $wur
 
 bar {
 	swaybar_command waybar
+	position top
+	hidden_state hide
+	mode dock
+	modifier none
 }
 
 ################################################################################
