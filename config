@@ -96,9 +96,8 @@ bar {
 # To list all applications running via Xwayland, run xlsclients -l
 
 for_window {
-	[shell="xwayland"] title_format "[XWayland] %title"
 	[class="^HTMaiL-View$"] floating enable
-	[class="Nm-connection-editor"] floating enable
+	[app_id="nm-connection-editor"] floating enable
 	[title="G Alternatives"] floating enable
 	[class="KiCad"] layout tabbed
 	[title="^zoom$" class="[zoom]*"] floating enable
@@ -107,6 +106,8 @@ for_window {
 
 	# Not sure if this achieves the desired goal in wayland
 	[class=".*"] border pixel 2
+	[shell="xwayland"] title_format "[XWayland] %title"
+		#, border normal
 
 	## Scratchpad/dropdown windows
 	[app_id="spfm"] floating enable, resize set 80 ppt 70 ppt,\
@@ -282,6 +283,13 @@ bindsym {
 	# TODO: look if it works for sway or search alternativ
 	# 	$mod+Shift+o exec  \
 	#	"pkill -USR1 -f /usr/bin/python3\ $HOME/.config/i3/scripts/disable-standby-fs.py"
+
+    # Capture the currently active output
+    Shift+Print exec grimshot save output
+    # Capture the currently active window
+    Alt+Print   exec grimshot save active
+    # Select and capture a custom rectangular area
+    Ctrl+Print  exec grimshot save area
 }
 
 # not supported until version 1.8
@@ -353,6 +361,22 @@ mode "$mode_present" {
 }
 bindsym $mod+p mode "$mode_present"
 
+set $mode_screenshot screenshot: active window (w), active ouput (o), area (a), +Shift for copy to clipboard
+mode "$mode_screenshot" {
+	bindsym {
+		o mode "default"; exec grimshot save output
+		w mode "default"; exec grimshot save active
+		a mode "default"; exec grimshot save area
+		Shift+o mode "default"; exec grimshot copy output
+		Shift+w mode "default"; exec grimshot copy active
+		Shift+a mode "default"; exec grimshot copy area
+		# return to default mode
+		Return mode "default"
+		Escape mode "default"
+	}
+}
+bindsym Print mode "$mode_screenshot"
+
 ################################################################################
 # Devices configuration
 ################################################################################
@@ -382,7 +406,7 @@ input * {
 exec {
 	# Scratchpad apps from start
 	$spfm
-	$spmath
+	gnome-calculator
 	keepassxc
 	# Other applications for desktop services
 	xfce4-power-manager
