@@ -121,6 +121,8 @@ for_window {
 		move position center, move scratchpad
 	[app_id="org.keepassxc.KeePassXC"] floating enable,\
 		move position center, move scratchpad
+	[app_id="org.telegram.desktop"] floating enable, \
+		move position center, move scratchpad
 }
 
 ## Windows to specific workspaces
@@ -141,14 +143,16 @@ bindsym {
 	# Scratchpad
 	$mod+u [app_id="spfm"] scratchpad show, resize set 80 ppt 70 ppt, \
 		move position center
+	$mod+Shift+u exec  $spfm
+
 	$mod+y  [app_id="org.gnome.Calculator"] scratchpad show, \
 		move position center
-	$mod+i  [app_id="org.keepassxc.KeePassXC"] scratchpad show, \
-	move position center
-
-	$mod+Shift+u exec  $spfm
 	$mod+Shift+y exec gnome-calculator
-	$mod+Shift+i exec keepassxc
+
+	#$mod+i  [app_id="org.keepassxc.KeePassXC"] scratchpad show, \
+	#move position center
+	#$mod+Shift+i exec keepassxc
+	$mod+i exec $HOME/.config/sway/scripts/window-picker
 
 	$mod+Shift+minus move scratchpad
 	$mod+minus scratchpad show, move position center
@@ -162,7 +166,8 @@ bindsym {
 
 	$mod+q kill
 	#$mod+d  exec  wofi --show drun -I
-	$mod+d  exec  fuzzel
+	$mod+d  exec  rofi -show drun -show-icons
+	#$mod+d  exec  fuzzel
 	# window mode not available in wofi
 	# 	$mod+Tab exec  wofi -w 60 -show window
 	# i3-msg mode not available in wofi
