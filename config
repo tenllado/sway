@@ -56,7 +56,7 @@ focus_follows_mouse yes
 
 # Background image
 ## same on all displays "*"
-output "*" bg ~/.config/sway/wallpaper.png fill
+output "*" bg ~/.config/sway/wallpaper.svg fill
 
 font pango:DejaVu Sans Mono 11
 gaps inner 4
@@ -107,6 +107,7 @@ for_window {
 	[title="^zoom$" class="[zoom]*"] floating enable
 	[class="com.inkwellideas.ographer.ui.Worldographer" title="^(?!Worldographer / Hexographer 2).*$"] floating enable
 	[app_id="pavucontrol"] floating enable, move position center
+	[class="es-gob-afirma-standalone-SimpleAfirma"] floating enable
 
 	# Not sure if this achieves the desired goal in wayland
 	[class=".*"] border pixel 2
@@ -160,7 +161,8 @@ bindsym {
 	$mod+space focus mode_toggle
 
 	$mod+q kill
-	$mod+d  exec  wofi --show drun -I
+	#$mod+d  exec  wofi --show drun -I
+	$mod+d  exec  fuzzel
 	# window mode not available in wofi
 	# 	$mod+Tab exec  wofi -w 60 -show window
 	# i3-msg mode not available in wofi
@@ -246,7 +248,7 @@ bindsym {
 	$mod+Control+0 move container to workspace $ws10; workspace $ws10
 
 	# rename current workspace
-	$mod+Control+r exec echo | wofi -d -p "Rename workspace to: " | \
+	$mod+Control+r exec echo | fuzzel -d -p "Rename workspace to: " | \
 		xargs -r swaymsg rename workspace to
 
 	#for dual monitor
@@ -270,7 +272,7 @@ bindsym {
 	XF86MonBrightnessDown exec brightnessctl set 5%-
 	XF86MonBrightnessUp exec brightnessctl set 5%+
 
-	$mod+m exec echo | wofi -d -p "Set mark:" | xargs -r swaymsg mark --togle 
+	$mod+m exec echo | fuzzel -d -p "Set mark:" | xargs -r swaymsg mark --togle 
 	## Focus window with mark
 	#	$mod+apostrophe exec i3-input -F '[con_mark=%s] focus' -l 1 -P 'Go to: '
 
